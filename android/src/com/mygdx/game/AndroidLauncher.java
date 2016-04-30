@@ -16,9 +16,9 @@ public class AndroidLauncher extends AndroidApplication {
 		getWindow().addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 		config.useWakelock = true;
 		config.useCompass = false;
-		initialize(new MyGdxGame(), config);
+//		initialize(new MyGdxGame(), config);
 //		initialize(new MainMenuScreen(), config);
-//		initialize(new SpaceInvaders(), config);
+		initialize(new SpaceInvaders(), config);
 //		initialize(new TouchpadTest(), config);
 	}
 }

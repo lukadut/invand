@@ -19,15 +19,12 @@ import com.mygdx.game.SpaceInvaders;
 /**
  * The base class for all game screens.
  */
-public abstract class AbstractScreen
-        implements
-        Screen
-{
-    // the fixed viewport dimensions (ratio: 1.6)
-    public static final int GAME_VIEWPORT_WIDTH = 400, GAME_VIEWPORT_HEIGHT = 240;
-    public static final int MENU_VIEWPORT_WIDTH = 800, MENU_VIEWPORT_HEIGHT = 480;
+public abstract class AbstractScreen implements Screen {
 
-    private static final boolean debug = true;
+//    public static final float VIEWPORT_WIDTH = 480f, VIEWPORT_HEIGHT = 800f;
+//    public static final int MENU_VIEWPORT_WIDTH = 800, MENU_VIEWPORT_HEIGHT = 480;
+
+//    private static final boolean debug = true;
 
     protected final SpaceInvaders game;
     protected final Stage stage;
@@ -38,14 +35,13 @@ public abstract class AbstractScreen
     private TextureAtlas atlas;
     private Table table;
 
-    public AbstractScreen(
-            SpaceInvaders game )
+    public AbstractScreen(SpaceInvaders game)
     {
         this.game = game;
-        int width = ( isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH );
-        int height = ( isGameScreen() ? GAME_VIEWPORT_HEIGHT : MENU_VIEWPORT_HEIGHT );
-        Viewport viewport = new ScreenViewport();
-        this.stage = new Stage(viewport); //new Stage( width, height, true );
+        ScreenViewport screenViewport = new ScreenViewport();
+        float scale = 1f / Gdx.graphics.getDensity();
+        screenViewport.setUnitsPerPixel(scale);
+        this.stage = new Stage(screenViewport);
     }
 
     protected String getName()
@@ -87,8 +83,7 @@ public abstract class AbstractScreen
     protected Skin getSkin()
     {
         if( skin == null ) {
-            FileHandle skinFile = Gdx.files.internal( "skin/uiskin.json" );
-            skin = new Skin( skinFile );
+            skin = new Skin(Gdx.files.internal("uiskin.json"));
         }
         return skin;
     }
@@ -98,9 +93,7 @@ public abstract class AbstractScreen
         if( table == null ) {
             table = new Table( getSkin() );
             table.setFillParent( true );
-            if( debug ) {
-                table.debug();
-            }
+
             stage.addActor( table );
         }
         return table;
@@ -138,10 +131,11 @@ public abstract class AbstractScreen
 
         // clear the screen with the given RGB color (black)
         Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // draw the actors
         stage.draw();
+//        System.out.println("stage draw");
 
         // draw the table debug lines
 

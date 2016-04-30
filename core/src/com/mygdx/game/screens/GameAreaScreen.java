@@ -2,8 +2,14 @@ package com.mygdx.game.screens;
 
 
 import com.badlogic.gdx.Screen;
+import com.mygdx.game.SpaceInvaders;
 
-public class GameAreaScreen implements Screen{
+public class GameAreaScreen extends AbstractScreen{
+
+    public GameAreaScreen(SpaceInvaders game){
+        super(game);
+    }
+
     @Override
     public void show() {
 
