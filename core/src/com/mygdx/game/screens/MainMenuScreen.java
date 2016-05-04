@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.SpaceInvaders;
 
+// do wywalenia prawdopodobnie
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -77,21 +78,30 @@ public class MainMenuScreen extends AbstractScreen{
         startButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
 
-                startButton.setText("THE END IS COMING!!!");
-                // initialize(new MyGdxGame(), config);
+               // odpalenie funkcji zmieniajacej screen
+                game.startGame();
 
-                // g.setScreen( new GameScreen());
+
             }
         });
 
+        scoreButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+
+                //TODO punktacja
+                game.showScore();
+
+            }
+        });
         quitButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                // quitButton.setText("THE END IS COMING!!!");
 
+                // wylacza aplikacje, mozliwe błędy z pozostawionymi w pamieci grafikami, reload na poczatku
                 Gdx.app.exit();
             }
         });
 
+        // tabela menu z buttonami jako wierszami
         // table.padTop(30);
         table.add(startButton).padBottom(30);
         table.row();
@@ -99,6 +109,7 @@ public class MainMenuScreen extends AbstractScreen{
         table.row();
         table.add(quitButton);
 
+        // tlo menu
         Image image = new Image(new Texture(Gdx.files.internal("background.png")));
         image.setHeight(stage.getHeight());
         image.setWidth(stage.getWidth());
@@ -107,15 +118,14 @@ public class MainMenuScreen extends AbstractScreen{
         stage.addActor(table);
 
 
-
-
-//        batch = getBatch();
-//        sprite = new Sprite(new Texture(Gdx.files.internal("background.png")));
-//        sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-//        stage.addActor(sprite);
         Gdx.input.setInputProcessor(stage);
 
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        skin.dispose();
     }
 
     @Override

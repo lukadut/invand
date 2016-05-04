@@ -52,4 +52,17 @@ public class SpaceInvaders extends Game {
 
 
     }
+
+    public void startGame() {
+        setScreen(new GameAreaScreen(this));
+    }
+
+    public void showScore() {
+        setScreen(new ScoreScreen(this));
+    }
+
+    public void showMenu() {
+        setScreen(new MainMenuScreen(this));
+    }
+
 }

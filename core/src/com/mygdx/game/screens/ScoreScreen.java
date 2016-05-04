@@ -1,15 +1,16 @@
 package com.mygdx.game.screens;
 
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.SpaceInvaders;
 
-public class GameAreaScreen extends AbstractScreen{
+/**
+ * Created by VIT on 2016-05-04.
+ */
+public class ScoreScreen extends AbstractScreen{
 
-    public GameAreaScreen(SpaceInvaders game){
+    public ScoreScreen(SpaceInvaders game){
         super(game);
     }
 
