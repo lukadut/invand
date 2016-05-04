@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.SpaceInvaders;
 
@@ -24,6 +26,7 @@ public class MainMenuScreen extends AbstractScreen{
     Table table;
     private TextButton startButton;
     private TextButton quitButton;
+    private TextButton scoreButton;
     private SpriteBatch batch;
     private Sprite sprite;
     private Skin skin;
@@ -66,25 +69,45 @@ public class MainMenuScreen extends AbstractScreen{
         Gdx.app.log("screen width", "" + Gdx.graphics.getWidth());
         Gdx.app.log("screen height", "" + Gdx.graphics.getHeight());
 
-        table.setPosition(0, stage.getHeight()/2);
-        startButton = new TextButton("New Game",getSkin());
-        quitButton = new TextButton("Quit Game",getSkin());
+        table.setPosition(0, stage.getHeight() / 2);
+        startButton = new TextButton("     New Game     ", skin);
+        quitButton = new TextButton("     Quit Game     ", skin);
+        scoreButton = new TextButton("     High Score     ", skin);
 
-        table.padTop(30);
+        startButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+
+                startButton.setText("THE END IS COMING!!!");
+                // initialize(new MyGdxGame(), config);
+
+                // g.setScreen( new GameScreen());
+            }
+        });
+
+        quitButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                // quitButton.setText("THE END IS COMING!!!");
+
+                Gdx.app.exit();
+            }
+        });
+
+        // table.padTop(30);
         table.add(startButton).padBottom(30);
-
+        table.row();
+        table.add(scoreButton).padBottom(30);
         table.row();
         table.add(quitButton);
-        
+
         Image image = new Image(new Texture(Gdx.files.internal("background.png")));
         image.setHeight(stage.getHeight());
         image.setWidth(stage.getWidth());
 
         stage.addActor(image);
         stage.addActor(table);
-        
 
-        
+
+
 
 //        batch = getBatch();
 //        sprite = new Sprite(new Texture(Gdx.files.internal("background.png")));
