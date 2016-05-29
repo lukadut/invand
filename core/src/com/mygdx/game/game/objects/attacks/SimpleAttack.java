@@ -1,21 +1,23 @@
-package com.mygdx.game.game.objects;
+package com.mygdx.game.game.objects.attacks;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.game.objects.GameObject;
 
 /**
- * Created by admin on 2016-04-30.
+ * Created by admin on 2016-05-28.
  */
-public class Egg implements GameObject{
+public class SimpleAttack implements GameObject {
     protected Vector2 position;
-    protected int width = 15, height = 19;
+    protected int width = 6, height = 16;
     protected Rectangle boundingBox;
     protected Texture texture;
+    private float damagePoints = 1;
 
-    public Egg(float x, float y){
-        texture = setTexture("egg.png");
+    public SimpleAttack(float x, float y){
+        texture = setTexture("atak.png");
         position = new Vector2(x,y);
         boundingBox = new Rectangle(x,y,width,height);
     }
@@ -57,6 +59,10 @@ public class Egg implements GameObject{
     }
 
     public void move(){
-        boundingBox.setY(boundingBox.getY()-2);
+        boundingBox.setY(boundingBox.getY()+5);
+    }
+
+    public float getDamagePoints(){
+        return damagePoints;
     }
 }
