@@ -52,6 +52,7 @@ public class World {
         return powerUps;
     }
     public int getLives(){return lives;}
+    public boolean paused = false;
     public long getScore() {return score;}
     public Boolean getWaitForSpawn(){return waitForSpawn;}
     public void setWaitForSpawn(Boolean waitForSpawn){this.waitForSpawn = waitForSpawn;}
@@ -108,7 +109,25 @@ public class World {
         score -= 100;
     }
 
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public void moveShip(int screenX, int screenY){
+        if(paused){
+            return;
+        }
+        ship.smoothMove(screenX,screenY);
+    }
+
     public void attack(){
+        if(paused){
+            return;
+        }
         GameObject bullet = new SimpleAttack(0,Consts.EDGE_DISTANCE + Consts.SHIP_HEIGHT);
         bullet.setXMiddle(ship.getXMiddle());
         bullets.add(bullet);

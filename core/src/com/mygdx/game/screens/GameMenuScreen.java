@@ -2,14 +2,12 @@ package com.mygdx.game.screens;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,12 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.SpaceInvaders;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.nio.file.Path;
-
-public class MainMenuScreen extends AbstractScreen{
+public class GameMenuScreen extends AbstractScreen{
     Table table;
     private TextButton startButton;
     private TextButton quitButton;
@@ -33,33 +26,9 @@ public class MainMenuScreen extends AbstractScreen{
     private Skin skin;
     private SpaceInvaders g;
 
-    public MainMenuScreen(SpaceInvaders game){
+    public GameMenuScreen(SpaceInvaders game){
         super(game);
         this.g = game;
-    }
-
-    @Override
-    public void show() {
-//        FileHandle fh = Gdx.files.internal("uiskin.json");
-//
-//        Gdx.app.log("fh.path()", "" + fh.path());
-//        File f = fh.file();
-//        Gdx.app.log("f", "" + f.getAbsolutePath());
-//        Gdx.app.log("f", "" + f.getPath());
-//        Gdx.app.log("f", "" + f.toURI());
-//        Gdx.app.log("fh",fh.read().toString());
-//
-//        try {
-//            final BufferedReader reader = new BufferedReader(
-//                    new InputStreamReader(fh.read()));
-//            String line = null;
-//            while ((line = reader.readLine()) != null) {
-//                        System.out.println(line);
-//            }
-//            reader.close();
-//        } catch (final Exception e) {
-//            e.printStackTrace();
-//        }
 
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
@@ -79,11 +48,11 @@ public class MainMenuScreen extends AbstractScreen{
 
         startButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-
+                System.out.println("START");
 //                startButton.setText("THE END IS COMING!!!");
                 // initialize(new MyGdxGame(), config);
 
-                g.setScreen(new GameAreaScreen(g));
+//                g.setScreen(new GameAreaScreen(g));
 //                 g.setScreen( new GameScreen());
             }
         });
@@ -91,8 +60,8 @@ public class MainMenuScreen extends AbstractScreen{
         quitButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 // quitButton.setText("THE END IS COMING!!!");
-
-                Gdx.app.exit();
+                System.out.println("KONIEC");
+//                Gdx.app.exit();
             }
         });
 
@@ -103,29 +72,21 @@ public class MainMenuScreen extends AbstractScreen{
         table.row();
         table.add(quitButton);
 
-        Image image = new Image(new Texture(Gdx.files.internal("background.png")));
-        image.setHeight(stage.getHeight());
-        image.setWidth(stage.getWidth());
-
-        stage.addActor(image);
         stage.addActor(table);
+    }
+
+    @Override
+    public void show() {
 
 
+    }
 
-
-//        batch = getBatch();
-//        sprite = new Sprite(new Texture(Gdx.files.internal("background.png")));
-//        sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-//        stage.addActor(sprite);
-        Gdx.input.setInputProcessor(stage);
-
+    public Stage getStage(){
+        return stage;
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.render(delta);
     }
 }

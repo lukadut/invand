@@ -119,9 +119,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void render(
-            float delta )
-    {
+    public void render(float delta )    {
         // (1) process the game logic
 
         // update the actors
@@ -130,8 +128,7 @@ public abstract class AbstractScreen implements Screen {
         // (2) draw the result
 
         // clear the screen with the given RGB color (black)
-        Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         // draw the actors
         stage.draw();

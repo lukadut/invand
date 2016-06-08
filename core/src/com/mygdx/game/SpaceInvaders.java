@@ -34,7 +34,7 @@ public class SpaceInvaders extends Game {
         super.resize(width, height);
 
         if( getScreen() == null ) {
-                setScreen( new GameAreaScreen( this) );
+                setScreen( new MainMenuScreen( this) );
 
         }
     }

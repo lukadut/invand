@@ -2,12 +2,22 @@ package com.mygdx.game.screens;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.SpaceInvaders;
 import com.mygdx.game.game.Config;
 import com.mygdx.game.game.Consts;
@@ -18,6 +28,16 @@ import com.mygdx.game.game.handlers.InputHandler;
 public class GameAreaScreen extends AbstractScreen{
     private World world;
     private Renderer renderer;
+    private GameMenuScreen gameMenuScreen;
+
+    Table table;
+    private TextButton startButton;
+    private TextButton quitButton;
+    private TextButton scoreButton;
+    private SpriteBatch batch;
+    private Sprite sprite;
+    private Skin skin;
+    private SpaceInvaders g;
 
     private Vector3 touchPos; // stare do ruchu
     float cameraRatioX,cameraRatioY; // stare do ruchu
@@ -31,7 +51,8 @@ public class GameAreaScreen extends AbstractScreen{
         cameraRatioY = (Gdx.graphics.getHeight()*1.0f)/(Consts.SCREEN_HEIGHT*1.0f); // stare do ruchu
         Config.screenRatioX = cameraRatioX;
         Config.screenRatioY = cameraRatioY;
-        Gdx.input.setInputProcessor(new InputHandler(cameraRatioX,cameraRatioY,world).get());
+        InputMultiplexer inputMultiplexer = new InputHandler(cameraRatioX,cameraRatioY,world).get();
+
 
         touchPos = new Vector3(); // stare do ruchu
         renderer.getCamera().unproject(touchPos); // stare do ruchu
@@ -39,18 +60,38 @@ public class GameAreaScreen extends AbstractScreen{
         System.out.println("screen height " + Consts.SCREEN_WIDTH);
         System.out.println("camera ratio " + cameraRatioX);
 
-        walkSheet = new Texture(Gdx.files.internal("chickenanim.png"));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet,5,6);
-        int index = 0;
-        walkFrames = new TextureRegion[5*6];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 6; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimation = new Animation(0.25f, walkFrames);      // #11         // #12
-        stateTime = 0f;
         spriteBatch = new SpriteBatch();
+
+
+
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        table = new Table();
+        table.setWidth(stage.getWidth());
+        table.align(Align.center | Align.top);
+        table.setPosition(0, stage.getHeight() / 2);
+        startButton = new TextButton("     New Game     ", skin);
+        quitButton = new TextButton("     Quit Game     ", skin);
+        scoreButton = new TextButton("     High Score     ", skin);
+        startButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+            }
+        });
+        quitButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+            }
+        });
+        table.add(startButton).padBottom(30);
+        table.row();
+        table.add(scoreButton).padBottom(30);
+        table.row();
+        table.add(quitButton);
+        stage.addActor(table);
+
+        batch = new SpriteBatch();
+        batch.setProjectionMatrix(renderer.getCamera().combined);
+
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -69,6 +110,17 @@ public class GameAreaScreen extends AbstractScreen{
     @Override
     public void render(float delta) {
         renderer.render(delta);
+        if(world.isPaused()){
+//            stage.draw();
+            batch.begin();
+//            Gdx.gl.glEnable(Gdx.gl20.GL_BLEND);
+//            batch.enableBlending();
+//            batch.setBlendFunction(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_DST_ALPHA);
+            table.draw(batch, 0.5f);
+//            batch.disableBlending();
+            batch.end();
+        }
+//        super.render(delta);
 //        stateTime += Gdx.graphics.getDeltaTime();           // #15
 //        currentFrame = walkAnimation.getKeyFrame(stateTime, true);  // #16
 //        spriteBatch.begin();

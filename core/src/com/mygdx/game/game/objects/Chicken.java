@@ -26,19 +26,19 @@ public class Chicken implements GameObject{
     float stateTime;
 
     public Chicken(float x, float y){
-        texture = setTexture("chicken.png");
+        texture = setTexture("kurczakWitka.png");
         boundingBox = new Rectangle(x,y,width,height);
-        walkSheet = setTexture("chickenanim.png");
-        TextureRegion[][] tmp = TextureRegion.split(texture,texture.getWidth()/3,texture.getHeight()/3);
+        walkSheet = setTexture("kurczakWitka.png");
+        TextureRegion[][] tmp = TextureRegion.split(texture,texture.getWidth()/8,texture.getHeight()/1);
         int index = 0;
-        walkFrames = new TextureRegion[9];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        walkFrames = new TextureRegion[8];
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 8; j++) {
                 walkFrames[index++] = tmp[i][j];
             }
         }
-        walkAnimation = new Animation(0.25f, walkFrames);      // #11         // #12
-        stateTime = 0f;                         // #13
+        walkAnimation = new Animation(0.125f, walkFrames);      // #11         // #12
+        stateTime = RandomGenerator.random(0,1);                         // #13
     }
 
     public TextureRegion getFrame(float deltaTime){

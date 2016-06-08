@@ -16,8 +16,11 @@ import com.mygdx.game.game.objects.Ship;
  * Created by admin on 2016-05-04.
  */
 public class InputHandler implements GestureDetector.GestureListener, InputProcessor{
-    private Ship ship;
+//    private Ship ship;
     private World world;
+
+    private InputMultiplexer im ;
+    private GestureDetector gd ;
 
     float scaleX, scaleY;
 
@@ -26,8 +29,12 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
     private int autoAttackPointer = -1;
 
     public InputHandler(float scaleX, float scaleY, final World world) {
+        im = new InputMultiplexer();
+        gd = new GestureDetector(this);
+        im.addProcessor(gd);
+        im.addProcessor(this);
         this.world = world;
-        this.ship = world.getShip();
+//        this.ship = world.getShip();
         this.scaleX = scaleX;
         this.scaleY = scaleY;
 
@@ -44,11 +51,12 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
     }
 
     public InputMultiplexer get(){
-        InputMultiplexer im = new InputMultiplexer();
-        GestureDetector gd = new GestureDetector(this);
-        im.addProcessor(gd);
-        im.addProcessor(this);
+
         return im;
+    }
+
+    public void addInputProcessor(InputProcessor inputProcessor){
+        im.addProcessor(inputProcessor);
     }
 
     @Override
@@ -102,6 +110,7 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.BACK){
             System.out.println("back");
+            world.setPaused(!world.isPaused());
         }
         return true;
     }
@@ -138,7 +147,7 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        ship.smoothMove(screenX,screenY);
+        world.moveShip(screenX, screenY);
         return true;
     }
 
