@@ -1,30 +1,63 @@
-package com.mygdx.game.game.helpers;
+package com.mygdx.game.game.handlers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.utils.Timer;
+import com.mygdx.game.game.Consts;
+import com.mygdx.game.game.World;
 import com.mygdx.game.game.objects.Ship;
 
 /**
  * Created by admin on 2016-05-04.
  */
 public class InputHandler implements GestureDetector.GestureListener, InputProcessor{
-    private Ship ship;
+//    private Ship ship;
+    private World world;
 
-    public InputHandler(Ship ship) {
-        this.ship = ship;
+    private InputMultiplexer im ;
+    private GestureDetector gd ;
+
+    float scaleX, scaleY;
+
+    private Timer timer;
+    private Timer.Task task;
+    private int autoAttackPointer = -1;
+
+    public InputHandler(float scaleX, float scaleY, final World world) {
+        im = new InputMultiplexer();
+        gd = new GestureDetector(this);
+        im.addProcessor(gd);
+        im.addProcessor(this);
+        this.world = world;
+//        this.ship = world.getShip();
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+
+        timer = Timer.instance();
+        task = new Timer.Task() {
+            @Override
+            public void run() {
+                world.attack();
+//                System.out.println("atak z task schedulera " + System.currentTimeMillis());
+            }
+        };
+        timer.scheduleTask(task,1,0.5f);
+        timer.stop();
     }
 
     public InputMultiplexer get(){
-        InputMultiplexer im = new InputMultiplexer();
-        GestureDetector gd = new GestureDetector(this);
-        im.addProcessor(gd);
-        im.addProcessor(this);
+
         return im;
     }
 
+    public void addInputProcessor(InputProcessor inputProcessor){
+        im.addProcessor(inputProcessor);
+    }
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
@@ -36,22 +69,20 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
-        message = "Touch down!";
-        Gdx.app.log("INFO", message);
+        if(autoAttackPointer == -1) {
+            timer.start();
+            autoAttackPointer = pointer;
+        }
         return true;
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        message = "Tap performed, finger" + Integer.toString(button);
-        Gdx.app.log("INFO", message);
         return false;
     }
 
     @Override
     public boolean longPress(float x, float y) {
-        message = "Long press performed";
-        Gdx.app.log("INFO", message);
         return true;
     }
 
@@ -67,46 +98,36 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-//        message = "Zoom performed, initial Distance:" + Float.toString(initialDistance) +
-//                " Distance: " + Float.toString(distance);
-//        Gdx.app.log("INFO", message);
         return true;
     }
 
     @Override
-    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
-                         Vector2 pointer1, Vector2 pointer2) {
-//        message = "Pinch performed";
-//        Gdx.app.log("INFO", message);
-
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return true;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        message = "Key Down";
-        Gdx.app.log("INFO", message);
+        if(keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE){
+            System.out.println("back");
+            world.setPaused(!world.isPaused());
+        }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        message = "Key up";
-        Gdx.app.log("INFO", message);
         return true;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        message = "Key typed";
-        Gdx.app.log("INFO", message);
         return true;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        message = "Touch Down";
-        Gdx.app.log("INFO", message);
+
 
         return false;
     }
@@ -114,28 +135,29 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         message = "Touch up";
-        Gdx.app.log("INFO", message);
-        return false;
+        if(pointer == autoAttackPointer) {
+            timer.stop();
+            autoAttackPointer = -1;
+        }
+        else{
+            world.attack();
+        }
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        message = "Touch Dragged";
-        Gdx.app.log("INFO", message);
-        return false;
+        world.moveShip(screenX, screenY);
+        return true;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        message = "Mouse moved";
-        Gdx.app.log("INFO", message);
         return false;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        message = "Scrolled";
-        Gdx.app.log("INFO", message);
         return false;
     }
 }
