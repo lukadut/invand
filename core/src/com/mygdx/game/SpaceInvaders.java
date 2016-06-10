@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.game.World;
 import com.mygdx.game.screens.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -24,8 +25,6 @@ import com.mygdx.game.screens.MainMenuScreen;
 
 
 public class SpaceInvaders extends Game {
-    private FPSLogger fpsLogger;
-
     public SpaceInvaders(){
 
     }
@@ -41,14 +40,14 @@ public class SpaceInvaders extends Game {
 
     @Override
     public void create() {
-        fpsLogger = new FPSLogger();
+
 
     }
 
     @Override
     public void render() {
         super.render();
-//        fpsLogger.log();
+
 
 
     }

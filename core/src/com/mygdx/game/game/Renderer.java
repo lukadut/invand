@@ -3,12 +3,13 @@ package com.mygdx.game.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.game.objects.Chicken;
 import com.mygdx.game.game.objects.Egg;
 import com.mygdx.game.game.objects.GameObject;
@@ -26,15 +27,39 @@ public class Renderer {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private BitmapFont font;
+    private Skin skin;
+    private Label score;
+    private Label lives;
+    private Image hearth;
+    private Table table;
 
-    public Renderer(final World world, final SpriteBatch batch) {
+    public Renderer(final World world, final SpriteBatch batch, final Skin skin) {
         this.world = world;
         this.ship = world.getShip();
+        this.skin = skin;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Consts.SCREEN_WIDTH, Consts.SCREEN_HEIGHT);
         this.batch = batch;
         batch.setProjectionMatrix(camera.combined);
+
+        lives = new Label(" 3 x",skin);
+        score = new Label("0",skin);
+        hearth = new Image( new Texture(Gdx.files.internal("hearth1.png")));
+        hearth.setWidth(15);
+        hearth.setHeight(15);
+
         font = new BitmapFont();
+        table = new Table(skin){
+
+        };
+        table.setWidth(Consts.SCREEN_WIDTH);
+        table.setPosition(0, Consts.SCREEN_HEIGHT - 20);
+        table.add("Score: ").left();
+        table.add(score).expand().left();
+
+
+        table.add(hearth).expand().right();
+        table.add(lives).right();
     }
 
     public void render(float delta){
@@ -47,10 +72,11 @@ public class Renderer {
         camera.update();
 
         batch.setProjectionMatrix(camera.combined);
+        score.setText(world.getScore() + "");
+        lives.setText(" " + world.getLives()+" x");
 
         batch.begin();
-        font.draw(batch, "Score " + world.getScore(), 0, Consts.SCREEN_HEIGHT);
-
+//        font.draw(batch, "Score " + world.getScore(), 0, Consts.SCREEN_HEIGHT);
         batch.draw(ship.getTexture(), ship.getX(), ship.getY());
 
         Iterator<GameObject> bulletIterator = world.getBullets().iterator();
@@ -58,10 +84,6 @@ public class Renderer {
             GameObject bullet = bulletIterator.next();
             bullet.move();
             bullet.draw(batch);
-//            batch.draw(bullet.getTexture(), bullet.getBoundingBox().getX(), bullet.getBoundingBox().getY(),bullet.getBoundingBox().getWidth(),bullet.getBoundingBox().getHeight());
-//            if(bullet.getBoundingBox().overlaps(endOfScreen)){
-//                bulletIterator.remove();
-//            }
             if(bullet.outOfMap()){
                 bullet.dispose();
                 bulletIterator.remove();
@@ -72,12 +94,10 @@ public class Renderer {
         while(chickenIterator.hasNext()){
             Chicken chicken = (Chicken)chickenIterator.next();
             chicken.animate(batch,delta);
-//            batch.draw(chicken.getFrame(delta), chicken.getBoundingBox().getX(), chicken.getBoundingBox().getY(), chicken.getBoundingBox().getWidth(), chicken.getBoundingBox().getHeight());
             Egg egg = chicken.throwEgg();
             if (egg != null){
                 world.getEggs().add(egg);
             }
-//            batch.draw(chicken.getFrame(1f),100,100,100,100);
 
             bulletIterator = world.getBullets().iterator();
             while(bulletIterator.hasNext()) {
@@ -100,7 +120,6 @@ public class Renderer {
             GameObject egg = eggsIterator.next();
             egg.move();
             egg.draw(batch);
-//            batch.draw(egg.getTexture(), egg.getBoundingBox().getX(), egg.getBoundingBox().getY(),egg.getBoundingBox().getWidth(),egg.getBoundingBox().getHeight());
             if(egg.getBoundingBox().overlaps(ship.getBoundingBox())){
                 world.killedPlayer();
                 eggsIterator.remove();
@@ -113,22 +132,17 @@ public class Renderer {
         }
 
 
-//        world.getBullets().forEach((GameObject bullet) -> batch.draw(ship.getTexture(), ship.getX(), ship.getY()); );
         if(batch.isDrawing()) {
             batch.end();
         }
 
-        if(world.getChickens().size == 0 && !world.getWaitForSpawn()){
+        batch.begin();
+        table.draw(batch, 1f);
+        batch.end();
+
+        if(world.getChickens().size == 0){
             world.getBullets().clear();
             world.spawnChickens();
-//            waitForRespawn = true;
-//            System.out.println("tutaj dodaje nextleveltask");
-//            timer.scheduleTask(nextLevel,3,0,1);
-//            synchronized (timer) {
-//                timer.notifyAll();
-//            }
-//            world.getBullets().clear();
-//            world.nextLevel();
         }
 
 

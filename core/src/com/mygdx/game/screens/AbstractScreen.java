@@ -121,34 +121,16 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void render(float delta )    {
-        // (1) process the game logic
         getBatch().enableBlending();
         getBatch().setColor(1,1,1,1);
-        // update the actors
         stage.act( delta );
-
-        // (2) draw the result
-
-        // clear the screen with the given RGB color (black)
-
-
-        // draw the actors
         stage.draw();
-//        System.out.println("stage draw");
-
-        // draw the table debug lines
-
-//        table.drawDebug( stage. );
     }
 
     @Override
     public void hide()
     {
         Gdx.app.log( "log", "Hiding screen: " + getName() );
-
-        // dispose the screen when leaving the screen;
-        // note that the dipose() method is not called automatically by the
-        // framework, so we must figure out when it's appropriate to call it
         dispose();
     }
 
@@ -168,13 +150,6 @@ public abstract class AbstractScreen implements Screen {
     public void dispose()
     {
         Gdx.app.log( "log", "Disposing screen: " + getName() );
-
-        // the following call disposes the screen's stage, but on my computer it
-        // crashes the game so I commented it out; more info can be found at:
-        // http://www.badlogicgames.com/forum/viewtopic.php?f=11&t=3624
-        // stage.dispose();
-
-        // as the collaborators are lazily loaded, they may be null
         if( font != null ) font.dispose();
         if( batch != null ) batch.dispose();
         if( skin != null ) skin.dispose();

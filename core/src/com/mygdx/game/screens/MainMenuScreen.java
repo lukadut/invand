@@ -37,40 +37,13 @@ public class MainMenuScreen extends AbstractScreen{
     private TextButton startButton;
     private TextButton quitButton;
     private TextButton scoreButton;
-    private SpriteBatch batch;
-    private Sprite sprite;
-    private Skin skin;
-    private SpaceInvaders g;
 
     public MainMenuScreen(SpaceInvaders game){
         super(game);
-        this.g = game;
     }
 
     @Override
     public void show() {
-//        FileHandle fh = Gdx.files.internal("uiskin.json");
-//
-//        Gdx.app.log("fh.path()", "" + fh.path());
-//        File f = fh.file();
-//        Gdx.app.log("f", "" + f.getAbsolutePath());
-//        Gdx.app.log("f", "" + f.getPath());
-//        Gdx.app.log("f", "" + f.toURI());
-//        Gdx.app.log("fh",fh.read().toString());
-//
-//        try {
-//            final BufferedReader reader = new BufferedReader(
-//                    new InputStreamReader(fh.read()));
-//            String line = null;
-//            while ((line = reader.readLine()) != null) {
-//                        System.out.println(line);
-//            }
-//            reader.close();
-//        } catch (final Exception e) {
-//            e.printStackTrace();
-//        }
-
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
@@ -82,9 +55,9 @@ public class MainMenuScreen extends AbstractScreen{
         Gdx.app.log("screen height", "" + Gdx.graphics.getHeight());
 
         table.setPosition(0, stage.getHeight() / 2);
-        startButton = new TextButton("     New Game     ", skin);
-        quitButton = new TextButton("     Quit Game     ", skin);
-        scoreButton = new TextButton("     High Score     ", skin);
+        startButton = new TextButton("     New Game     ", getSkin());
+        quitButton = new TextButton("     Quit Game     ", getSkin());
+        scoreButton = new TextButton("     High Score     ", getSkin());
 
         startButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -92,7 +65,7 @@ public class MainMenuScreen extends AbstractScreen{
 //                startButton.setText("THE END IS COMING!!!");
                 // initialize(new MyGdxGame(), config);
 
-                g.setScreen(new GameAreaScreen(g));
+                game.setScreen(new GameAreaScreen(game));
 //                 g.setScreen( new GameScreen());
             }
         });
@@ -121,86 +94,10 @@ public class MainMenuScreen extends AbstractScreen{
         stage.addActor(image);
         stage.addActor(table);
 
-        Dialog d = new Dialog("abc",skin);
-        d.setWidth(Gdx.graphics.getWidth()/2);
-//        d.add("abcd");
-        TextButton b = new TextButton("baton",skin);
-        b.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-//                FrameBuffer fb = new FrameBuffer(Pixmap.Format.RGBA8888,480,800,true);
-//                fb.begin();
-
-                saveScreenshot();
-//                fb.end();
-//                TextureRegion tr;
-//                Image im;
-//                tr = ScreenUtils.getFrameBufferTexture();
-//                byte[] bity = ScreenUtils.getFrameBufferPixels(0,0,Gdx.graphics.getBackBufferWidth(),Gdx.graphics.getBackBufferHeight(),true);
-//
-//                FileHandle to = Gdx.files.local("test.png");
-//                to.writeBytes(bity,false);
-//                File f = new File("/sdcard/screenshot.png");
-//                FileHandle fh = new FileHandle(f);
-//                fh.writeBytes(bity,false);
-//                System.out.println("rozmiar bitow " + bity.length);
-//                for(int i=0;i<bity.length;i=i+4){
-//                    System.out.println(String.format("r %d g %d b %d a %d", bity[i],bity[i+1],bity[i+2],bity[i+3]));
-//                }
-            }
-        });
-        d.button(b);
-        d.button("abcd");
-        d.show(stage);
-
-
-
-
-//        batch = getBatch();
-//        sprite = new Sprite(new Texture(Gdx.files.internal("background.png")));
-//        sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-//        stage.addActor(sprite);
         Gdx.input.setInputProcessor(stage);
 
     }
 
-    private static int counter = 1;
-    public static void saveScreenshot(){
-        try{
-            FileHandle fh;
-            do{
-                fh = new FileHandle(Gdx.files.getExternalStoragePath() + "screenshot" + counter++ + ".png");
-            }while (fh.exists());
-            String path = fh.path();
-            System.out.println(path);
-            Pixmap pixmap = getScreenshot(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-            PixmapIO.writePNG(fh, pixmap);
-            pixmap.dispose();
-        }catch (Exception e){
-            Gdx.app.error("screen","cos sie popsulo i nie bylo mnie slychac");
-        }
-    }
-
-    private static Pixmap getScreenshot(int x, int y, int w, int h, boolean yDown){
-        final Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, w, h);
-
-//        if (yDown) {
-//            // Flip the pixmap upside down
-//            ByteBuffer pixels = pixmap.getPixels();
-//            int numBytes = w * h * 4;
-//            byte[] lines = new byte[numBytes];
-//            int numBytesPerLine = w * 4;
-//            for (int i = 0; i < h; i++) {
-//                pixels.position((h - i - 1) * numBytesPerLine);
-//                pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
-//            }
-//            pixels.clear();
-//            pixels.put(lines);
-//        }
-
-        return pixmap;
-    }
 
     @Override
     public void render(float delta) {
