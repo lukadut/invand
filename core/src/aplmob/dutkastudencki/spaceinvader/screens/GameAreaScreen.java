@@ -83,7 +83,7 @@ public class GameAreaScreen extends AbstractScreen{
         Config.screenWidth  = Gdx.graphics.getWidth();
 
         gameInputHandler = new InputHandler(world).getInputMultiplexer();
-        //gameInputHandler.addProcessor(stage);
+        gameInputHandler.addProcessor(stage);
 
         Gdx.input.setInputProcessor(gameInputHandler);
 

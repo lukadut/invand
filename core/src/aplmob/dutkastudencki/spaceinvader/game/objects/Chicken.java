@@ -43,7 +43,7 @@ public class Chicken extends GameObject{
     public Chicken(float x, float y){
         width = 54;
         height = 39;
-        texture = setTexture("kurczakWitka.png");
+        texture = setTexture("chicken.png");
         boundingBox = new Rectangle(x,y,width,height);
         makeAnimation(1,8,8);
     }
@@ -58,8 +58,8 @@ public class Chicken extends GameObject{
         TextureRegion[][] tmp = TextureRegion.split(texture,texture.getWidth()/8,texture.getHeight()/1);
         int index = 0;
         animationFrames = new TextureRegion[row*column];
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
                 animationFrames[index++] = tmp[i][j];
             }
         }

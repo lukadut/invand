@@ -24,7 +24,7 @@ public class SimpleAttack extends GameObject {
     public SimpleAttack(float x, float y){
         width = 6;
         height = 16;
-        texture = setTexture("atak.png");
+        texture = setTexture("attack.png");
         boundingBox = new Rectangle(x,y,width,height);
         movingVector = new Vector2(0, -5);
     }

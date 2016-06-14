@@ -86,7 +86,7 @@ public class Renderer {
 
         lives = new Label(" 3 x",skin);
         score = new Label("0",skin);
-        hearth = new Image( new Texture(Gdx.files.internal("hearth1.png")));
+        hearth = new Image( new Texture(Gdx.files.internal("hearth.png")));
         hearth.setWidth(15);
         hearth.setHeight(15);
 
