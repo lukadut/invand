@@ -3,10 +3,10 @@ package aplmob.dutkastudencki.spaceinvader.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -41,7 +41,17 @@ public class GameAreaScreen extends AbstractScreen{
     private Dialog menuWindow;
 
     /**
-     * Flaga, czy menu jest włączone.
+     * Okno z końcem gry.
+     */
+    private Dialog endGameWindow;
+
+    /**
+     * Komunikat na koniec gry.
+     */
+    private Label endGameScore;
+
+    /**
+     * Flaga czy menu jest włączone.
      */
     private boolean menu = false;
 
@@ -59,7 +69,8 @@ public class GameAreaScreen extends AbstractScreen{
      */
     public GameAreaScreen(SpaceInvaders game){
         super(game);
-        menuWindow = prepareDialogWindow();
+        menuWindow = prepareMenuDialog();
+        endGameWindow = prepareEndGameDialog();
         Gdx.input.setCatchBackKey(true);
         world = new World(){
             @Override
@@ -70,6 +81,23 @@ public class GameAreaScreen extends AbstractScreen{
                 }
                 else {
                     hideMenu();
+                }
+            }
+
+            @Override
+            public void endGame() {
+                super.endGame();
+                endGameWindow.show(stage);
+                menu = true;
+            }
+
+            @Override
+            public void killedPlayer() {
+                super.killedPlayer();
+                if(getLives()<0){
+                    this.endGame();
+                    renderer.lastScoreUpdate();
+                    endGameScore.setText("You have scored " + world.getScore() + " points.");
                 }
             }
         };
@@ -93,7 +121,7 @@ public class GameAreaScreen extends AbstractScreen{
      * Tworzy okno dialogowe do pauzy.
      * @return  stworzone okno dialogowe
      */
-    private Dialog prepareDialogWindow(){
+    private Dialog prepareMenuDialog(){
         Dialog dialog = new Dialog("", getSkin()){
             @Override
             public float getPrefWidth() {
@@ -152,6 +180,59 @@ public class GameAreaScreen extends AbstractScreen{
         dialog.getButtonTable().padTop(20).row();
         dialog.getButtonTable().add(returnToGame).padBottom(20).row();
         dialog.getButtonTable().add(quitToMainMenu).padBottom(20).row();
+
+        return dialog;
+    }
+
+    /**
+     * Tworzy okno dialogowe do pauzy.
+     * @return  stworzone okno dialogowe
+     */
+    private Dialog prepareEndGameDialog(){
+        Dialog dialog = new Dialog("", getSkin()){
+            @Override
+            public float getPrefWidth() {
+                return Config.SCREEN_WIDTH / 2;
+            }
+
+        };
+
+        // anuluje okno, żeby nie działało pod renderem gry
+        dialog.cancel();
+
+        Button quitToScores = new TextButton("OK",getSkin()){
+            @Override
+            public float getPrefWidth() {
+                return Config.SCREEN_WIDTH / 2 - 10;
+            }
+            @Override
+            public float getPrefHeight() {
+                return 3*super.getPrefHeight();
+            }
+        };
+
+        // wyjście z gry do okna z wynikami
+        quitToScores.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (menu) {
+                    game.setScreen(new MainMenuScreen(game));
+                    System.out.println("to jest moment, kiedy powinnobylo sie zaladowac okno z wynikami");
+                    dispose();
+                }
+            }
+        });
+        endGameScore = new Label("",getSkin());
+
+        dialog.getTitleTable().setSkin(getSkin());
+        dialog.getTitleTable().getCells().removeIndex(0);
+        dialog.getTitleTable().row();
+        dialog.getTitleTable().add("You are dead");
+        dialog.getContentTable().padTop(20).row();
+        dialog.getContentTable().add(endGameScore);
+        dialog.getButtonTable().padTop(20).row();
+        dialog.getButtonTable().add(quitToScores).padBottom(20).row();
+
 
         return dialog;
     }

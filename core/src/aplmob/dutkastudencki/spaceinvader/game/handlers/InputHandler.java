@@ -153,7 +153,8 @@ public class InputHandler implements GestureDetector.GestureListener, InputProce
     public boolean keyDown(int keycode) {
         gestureName("public boolean keyDown");
         if(keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE){
-            world.setPaused(!world.isPaused());
+            if(!(world.getLives()<0))
+                world.setPaused(!world.isPaused());
         }
         return false;
     }

@@ -110,6 +110,18 @@ public class Renderer {
     }
 
     /**
+     * Ostatnia aktualizacja wyniku, żeby nie było sytuacji, że wynik finalny się rozjechał
+     */
+    public void lastScoreUpdate(){
+        if(!batch.isDrawing()) {
+            batch.begin();
+        }
+        score.setText(world.getScore() + "");
+        infoHeader.draw(batch, 1f);
+        batch.end();
+    }
+
+    /**
      * Renderowanie świata gry.
      * @param delta  czas od poprzedniej klatki sceny
      */

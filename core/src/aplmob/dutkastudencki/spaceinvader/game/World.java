@@ -162,6 +162,13 @@ public class World {
     }
 
     /**
+     * Wywoływane na koniec gry
+     */
+    public void endGame(){
+        paused = true;
+    }
+
+    /**
      * Rusza statek do pozycji (x,y), jeśli gra nie jest spauzowana.
      * @param screenX  pozycja X
      * @param screenY  pozycja Y
