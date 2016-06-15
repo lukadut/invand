@@ -185,7 +185,7 @@ public class Renderer {
                         ChickenLeg leg = chicken.throwLeg();
                         if (leg != null)
                             world.getLegs().add(leg);
-
+                        world.chickenSound.play();
                         chicken.dispose();
                         chickenIterator.remove();
                         world.killedChicken(chicken.isBoss);

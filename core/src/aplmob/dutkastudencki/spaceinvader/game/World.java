@@ -1,5 +1,7 @@
 package aplmob.dutkastudencki.spaceinvader.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 
 import aplmob.dutkastudencki.spaceinvader.game.objects.Boss;
@@ -54,6 +56,10 @@ public class World {
      */
     private boolean paused = false;
 
+    public Sound chickenSound;
+    public Sound blasterSound;
+    public Sound noSound;
+
     private int level=0;
 
     /**
@@ -67,6 +73,11 @@ public class World {
         bullets = new Array<GameObject>();
         legs = new Array<GameObject>();
 //        powerUps = new Array<GameObject>();
+
+
+        chickenSound =  Gdx.audio.newSound(Gdx.files.internal("sounds/dead.mp3"));
+        blasterSound =  Gdx.audio.newSound(Gdx.files.internal("sounds/laser.mp3"));
+        noSound = Gdx.audio.newSound(Gdx.files.internal("sounds/noo.mp3"));
         prepareGame();
     }
 
@@ -199,7 +210,9 @@ public class World {
      * Wywoływane na koniec gry
      */
     public void endGame(){
+
         paused = true;
+        noSound.play();
     }
 
     /**
@@ -222,6 +235,7 @@ public class World {
             return;
         }
         GameObject bullet = new SimpleAttack(0,Config.EDGE_DISTANCE + Config.SHIP_HEIGHT);
+        blasterSound.play(0.2f);
         try {
             float x = ship.getXMiddle();
             float y = ship.getYMiddle();
