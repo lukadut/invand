@@ -48,19 +48,19 @@ public class GameObject {
     /**
      * Kształt powyżej górnej krawędzi ekranu.
      */
-    private static Rectangle borderTop = new Rectangle(0, Config.SCREEN_HEIGHT,Config.SCREEN_WIDTH,10000);
+    protected static Rectangle borderTop = new Rectangle(0, Config.SCREEN_HEIGHT,Config.SCREEN_WIDTH,10000);
     /**
      * Kształt poniżej dolnej krawędzi ekranu.
      */
-    private static Rectangle borderBottom = new Rectangle(0, -10000,Config.SCREEN_WIDTH,10000);
+    protected static Rectangle borderBottom = new Rectangle(0, -10000,Config.SCREEN_WIDTH,10000);
     /**
      * Kształt za lewą krawędzią ekranu.
      */
-    private static Rectangle borderLeft = new Rectangle(-10000, 0,10000,Config.SCREEN_HEIGHT);
+    protected static Rectangle borderLeft = new Rectangle(-10000, 0,10000,Config.SCREEN_HEIGHT);
     /**
      * Kształt za prawą krawędzią ekranu.
      */
-    private static Rectangle borderRight = new Rectangle(Config.SCREEN_WIDTH, 0, 10000,Config.SCREEN_HEIGHT);
+    protected static Rectangle borderRight = new Rectangle(Config.SCREEN_WIDTH, 0, 10000,Config.SCREEN_HEIGHT);
 
     /**
      * Wczytanie tekstury z pliku o zadanej nazwie.<br>

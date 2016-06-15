@@ -164,10 +164,10 @@ public class Renderer {
             Chicken chicken = (Chicken)chickenIterator.next();
             if(chicken.isBoss) {
                 chicken.move();
-                if (chicken.getX() < 0 || chicken.getY() >  Config.SCREEN_WIDTH - chicken.getWidth())
-                    chicken.limitReached(true);
-                if (chicken.getY() < Config.BOSS_BOUNDRY || chicken.getY() > Config.SCREEN_HEIGHT - chicken.getHeight())
-                    chicken.limitReached(false);
+//                if (chicken.getX() < 0 || chicken.getY() >  Config.SCREEN_WIDTH - chicken.getWidth())
+//                    chicken.limitReached(true);
+//                if (chicken.getY() < Config.BOSS_BOUNDRY || chicken.getY() > Config.SCREEN_HEIGHT - chicken.getHeight())
+//                    chicken.limitReached(false);
             }
             chicken.animate(batch, delta);
             Egg egg = chicken.throwEgg(world.getLevel());
@@ -229,7 +229,7 @@ public class Renderer {
             }
             if (leg.outOfMap()) {
                 leg.dispose();
-                eggsIterator.remove();
+                legsIterator.remove();
             }
         }
 

@@ -134,9 +134,4 @@ public class Chicken extends GameObject{
         return null;
     }
 
-    public void limitReached(boolean where)
-    {
-
-    }
-
 }

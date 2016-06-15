@@ -21,7 +21,17 @@ public class ChickenLeg  extends GameObject{
         height = 20;
         texture = setTexture("nozka.png");
         boundingBox = new Rectangle(x,y,width,height);
-        movingVector = new Vector2(0, RandomGenerator.random(1, 3));
+        movingVector = new Vector2(RandomGenerator.random(-2,2), RandomGenerator.random(3, 6));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void move(){
+        super.move();
+        if(boundingBox.overlaps(borderLeft) || boundingBox.overlaps(borderRight))
+            movingVector.x=-movingVector.x + (RandomGenerator.random(-0.2f,0.2f));
     }
 
 }

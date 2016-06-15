@@ -33,16 +33,16 @@ public class Boss extends Chicken {
     }
 
     /**
-     * zmiana kierunku poruszania się w przypadku osiągniecia granicy
-     * @param where kierunek zmiany, true = os X, false = os Y
+     * {@inheritDoc}
      */
-    public void limitReached(boolean where)
+    @Override
+    public void move()
     {
-
-        if(where)
-        movingVector.x=-movingVector.x;
-        else
-        movingVector.y=-movingVector.y;
+        super.move();
+        if(boundingBox.overlaps(borderLeft) || boundingBox.overlaps(borderRight))
+        movingVector.x=-movingVector.x + (RandomGenerator.random(-0.2f,0.2f));
+        if(boundingBox.overlaps(borderTop) || boundingBox.overlaps(borderBottom))
+        movingVector.y=-movingVector.y + (RandomGenerator.random(-0.2f,0.2f));
 
 
     }
