@@ -36,7 +36,7 @@ public class ScoreScreen extends AbstractScreen{
      */
     private TextButton testButton;
     /**
-     * vector etykiet z punktacja
+     * vector etykiet z punktacją
      */
     private Vector<Label> scoreLabel;
     /**
@@ -54,7 +54,7 @@ public class ScoreScreen extends AbstractScreen{
     // private BitmapFont font;
 
     /**
-     * konstruktor z parametremi do nowego wyniku na liscie
+     * konstruktor z parametremi do nowego wyniku na liście
      */
     public ScoreScreen(SpaceInvaders game,String name, int score){
         super(game);
@@ -63,7 +63,7 @@ public class ScoreScreen extends AbstractScreen{
         scoreMenager.UpdateScore(name,score);
     }
     /**
-     * domyslny konstruktor
+     * domyślny konstruktor
      */
     public ScoreScreen(SpaceInvaders game){
 
@@ -72,7 +72,7 @@ public class ScoreScreen extends AbstractScreen{
     }
 
     /**
-     * definicja wygladu ekranu po wyswietleniu
+     * definicja wyglądu ekranu po wyświetleniu
      */
     @Override
     public void show() {

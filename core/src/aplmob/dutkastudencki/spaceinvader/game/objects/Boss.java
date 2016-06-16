@@ -23,13 +23,10 @@ public class Boss extends Chicken {
         width = 108;
         height = 78;
         level = lvl;
-       // texture.dispose();
-       // texture = setTexture("kurczakWitkaB.png");
-
 
         boundingBox = new Rectangle(x,y,width,height);
 
-        isBoss=true;
+        boss = true;
         healthPoints = 10+ 2*lvl;
         movingVector = new Vector2(RandomGenerator.random(-2, 2),RandomGenerator.random(-2, 2) );
     }
@@ -56,7 +53,7 @@ public class Boss extends Chicken {
             lastEggTime = System.currentTimeMillis();
             Egg egg = new Egg(0, getBoundingBox().getY() - getHeight());
             egg.setMiddle(getXMiddle(),getYMiddle());
-            egg.EggUpgrade();
+            egg.eggUpgrade();
             return egg;
 
         }

@@ -28,7 +28,7 @@ public class Egg extends GameObject{
     /**
      * funkcja ulepszajaca jajko, zwieksza predkosc i dodaje ruch po osi x
      */
-    public void EggUpgrade()
+    public void eggUpgrade()
     {
         movingVector.x=RandomGenerator.random(-2,2);
         movingVector.y=RandomGenerator.random(1.5f,4);

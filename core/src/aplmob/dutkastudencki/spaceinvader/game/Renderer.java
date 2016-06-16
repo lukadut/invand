@@ -90,7 +90,7 @@ public class Renderer {
 
         lives = new Label(" 3 x",skin);
         score = new Label("0",skin);
-        hearth = new Image( new Texture(Gdx.files.internal("hearth1.png")));
+        hearth = new Image( new Texture(Gdx.files.internal("hearth.png")));
         hearth.setWidth(15);
         hearth.setHeight(15);
 
@@ -162,12 +162,8 @@ public class Renderer {
         Iterator<GameObject> chickenIterator = world.getChickens().iterator();
         while(chickenIterator.hasNext()){
             Chicken chicken = (Chicken)chickenIterator.next();
-            if(chicken.isBoss) {
+            if(chicken.isBoss()) {
                 chicken.move();
-//                if (chicken.getX() < 0 || chicken.getY() >  Config.SCREEN_WIDTH - chicken.getWidth())
-//                    chicken.limitReached(true);
-//                if (chicken.getY() < Config.BOSS_BOUNDRY || chicken.getY() > Config.SCREEN_HEIGHT - chicken.getHeight())
-//                    chicken.limitReached(false);
             }
             chicken.animate(batch, delta);
             Egg egg = chicken.throwEgg();
@@ -185,10 +181,10 @@ public class Renderer {
                         ChickenLeg leg = chicken.throwLeg();
                         if (leg != null)
                             world.getLegs().add(leg);
-                        world.chickenSound.play();
+                        world.getChickenSound().play();
                         chicken.dispose();
                         chickenIterator.remove();
-                        world.killedChicken(chicken.isBoss);
+                        world.killedChicken(chicken.isBoss());
                     }
                     bullet.dispose();
                     bulletIterator.remove();

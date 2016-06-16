@@ -19,7 +19,7 @@ public class ChickenLeg  extends GameObject{
     public ChickenLeg(float x, float y){
         width = 28;
         height = 20;
-        texture = setTexture("nozka.png");
+        texture = setTexture("chickenLeg.png");
         boundingBox = new Rectangle(x,y,width,height);
         movingVector = new Vector2(RandomGenerator.random(-2,2), RandomGenerator.random(3, 6));
     }

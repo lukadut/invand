@@ -58,17 +58,17 @@ public class World {
      */
     private boolean paused = false;
     /**
-     * dzwiek kurczaka
+     * Dźwięk kurczaka.
      */
-    public Sound chickenSound;
+    private Sound chickenSound;
     /**
-     * dzwiek laseru
+     * Dźwięk laseru.
      */
-    public Sound blasterSound;
+    private Sound blasterSound;
     /**
-     * dzwiek konca rozgrywki
+     * Dźwięk końca rozgrywki.
      */
-    public Sound noSound;
+    private Sound noSound;
     /**
      * poziom gry
      */
@@ -153,6 +153,30 @@ public class World {
      * @return  level gry
      */
     public int getLevel() {return level;}
+
+    /**
+     *
+     * @return  dźwięk kurczaka
+     */
+    public Sound getChickenSound() {
+        return chickenSound;
+    }
+
+    /**
+     *
+     * @return  dźwięk lasera
+     */
+    public Sound getBlasterSound() {
+        return blasterSound;
+    }
+
+    /**
+     *
+     * @return  dźwięk końca gry
+     */
+    public Sound getNoSound() {
+        return noSound;
+    }
 
     public void levelUp() {level++;}
     /**

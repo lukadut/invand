@@ -43,9 +43,11 @@ public class ScoreMenager {
         saveScores();
     }
     /**
-     * update lokalnej listy wynikow, a = imie, i = zdobyte pkt.
+     * update lokalnej listy wyników
+     * @param name  imię
+     * @param score zdobyty wynik
      */
-    public void UpdateScore(String a,int i)
+    public void UpdateScore(String name,int score)
     {
 
         String tempName="";
@@ -62,13 +64,13 @@ public class ScoreMenager {
                 tempName=temp2;
                 tempScore=temp3;
             }
-            else if(i>Points[j])
+            else if(score>Points[j])
             {
                 changed=true;
                 tempScore=Points[j];
                 tempName=Names[j];
-                Points[j]=i;
-                Names[j]=a;
+                Points[j]=score;
+                Names[j]=name;
             }
         }
         if (changed==true)
@@ -122,14 +124,16 @@ public class ScoreMenager {
         }
     }
     /**
-     * @return imie na i tej pozycji w postaci stringu
+     * @param i  pozycja
+     * @return imię na i-tej pozycji
      */
     public String getName(int i)
     {
         return Names[i];
     }
     /**
-     * @return wynik na i tej pozycji jako int
+     * @param i  pozycja
+     * @return wynik na i-tej pozycji
      */
     public int getPoint(int i)
     {

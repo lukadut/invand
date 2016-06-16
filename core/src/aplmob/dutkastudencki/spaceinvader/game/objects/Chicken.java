@@ -11,7 +11,7 @@ import aplmob.dutkastudencki.spaceinvader.utils.RandomGenerator;
  * @see aplmob.dutkastudencki.spaceinvader.game.objects.GameObject
  *
  * @since 2016-04-30
- * @author Łukasz Dutka
+ * @author  Łukasz Dutka
  */
 public class Chicken extends GameObject{
     /**
@@ -36,14 +36,15 @@ public class Chicken extends GameObject{
     protected float stateTime;
 
     /**
-     *poziom na którym został zespawnowany kurczak
+     * Poziom na którym został zespawnowany kurczak.
      */
     protected int level;
 
+
     /**
-     * bool informujacy o jakości kurczaka
+     * Flaga, czy dany kurczak jest bossem.
      */
-    public Boolean isBoss=false;
+    protected boolean boss = false;
 
     /**
      * Konstruktor kurczaka.
@@ -53,7 +54,7 @@ public class Chicken extends GameObject{
     public Chicken(float x, float y, int lvl){
         width = 54;
         height = 39;
-        texture = setTexture("kurczakWitka.png");
+        texture = setTexture("chicken.png");
         boundingBox = new Rectangle(x,y,width,height);
         healthPoints += (int)(lvl*0.2);
         level= lvl;
@@ -70,8 +71,8 @@ public class Chicken extends GameObject{
         TextureRegion[][] tmp = TextureRegion.split(texture,texture.getWidth()/8,texture.getHeight()/1);
         int index = 0;
         animationFrames = new TextureRegion[row*column];
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
                 animationFrames[index++] = tmp[i][j];
             }
         }
@@ -144,6 +145,14 @@ public class Chicken extends GameObject{
 
         }
         return null;
+    }
+
+    /**
+     *
+     * @return  flaga, czy kurczak jest bossem
+     */
+    public boolean isBoss() {
+        return boss;
     }
 
 }
