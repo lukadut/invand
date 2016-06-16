@@ -120,9 +120,19 @@ public class GameObject {
     public boolean outOfMap(){
         return (borderBottom.contains(boundingBox) || borderTop.contains(boundingBox) || borderLeft.contains(boundingBox) || borderRight.contains(boundingBox) );
     }
+    /**
+     *
+     * @return  <i>true</i> - jeśli obiekt wyszedł poza ekran na osi x<br>
+     *     <i>false</i> - jeśli obiekt nie wyszedł poza ekran na osi x
+     */
     public boolean outOfX(){
         return ( borderLeft.contains(boundingBox) || borderRight.contains(boundingBox) );
     }
+    /**
+     *
+     * @return  <i>true</i> - jeśli obiekt wyszedł poza ekran na osi y<br>
+     *     <i>false</i> - jeśli obiekt nie wyszedł poza ekran na osi y
+     */
     public boolean outOfY(){
         return (borderBottom.contains(boundingBox) || borderTop.contains(boundingBox)  );
     }

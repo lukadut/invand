@@ -167,13 +167,15 @@ public class ScoreScreen extends AbstractScreen{
     public void hide() {
 
     }
-
+    /**
+     * zwalnianie zasobow
+     */
     @Override
     public void dispose() {
 
         stage.dispose();
         skin.dispose();
-     //   super.dispose();
+        super.dispose();
 
     }
 }

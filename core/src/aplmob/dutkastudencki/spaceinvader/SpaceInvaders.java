@@ -34,14 +34,18 @@ public class SpaceInvaders extends Game {
         super.render();
     }
 
+    /**
+     * ustawienie ekranu gry
+     */
         public void startGame() {setScreen(new GameAreaScreen(this));}
-
+    /**
+     * ustawienie ekranu punktacji
+     */
         public void showScore() { setScreen(new ScoreScreen(this));  }
-
+    /**
+     * ustawienie ekranu menu
+     */
         public void showMenu() {setScreen(new MainMenuScreen(this));}
-     //   public void ScoreUpdate(String name,int score)
-     //       {
-      //          scoreMenager.UpdateScore(name,score);
-       //     }
+
 
     }

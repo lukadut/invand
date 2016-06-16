@@ -118,11 +118,14 @@ public class MainMenuScreen extends AbstractScreen{
         Gdx.input.setInputProcessor(stage);
 
     }
-
+    /**
+     * zwalnianie zasobow
+     */
     @Override
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        super.dispose();
     }
     @Override
     public void resize(int width, int height) {

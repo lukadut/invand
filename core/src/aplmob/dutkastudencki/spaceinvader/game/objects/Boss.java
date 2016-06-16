@@ -16,11 +16,13 @@ public class Boss extends Chicken {
      * Konstruktor bossa
      * @param x położenie na osi X
      * @param y położenie na osi Y
+     * @param lvl poziom na ktorym zostal przywolany
      */
     public Boss (float x, float y,int lvl){
         super(x, y,lvl);
         width = 108;
         height = 78;
+        level = lvl;
        // texture.dispose();
        // texture = setTexture("kurczakWitkaB.png");
 
@@ -49,8 +51,8 @@ public class Boss extends Chicken {
     /**
      * Nadpisana metoda rzucania, zwiększona częstotliwość
      */
-    public Egg throwEgg(int lvl){
-        if (RandomGenerator.random(0,100-lvl)<1) {
+    public Egg throwEgg(){
+        if (RandomGenerator.random(0,100-level)<1) {
             lastEggTime = System.currentTimeMillis();
             Egg egg = new Egg(0, getBoundingBox().getY() - getHeight());
             egg.setMiddle(getXMiddle(),getYMiddle());

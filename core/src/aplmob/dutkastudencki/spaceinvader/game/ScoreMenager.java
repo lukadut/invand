@@ -25,11 +25,16 @@ public class ScoreMenager {
      */
     String[] Names={"no one","no one","no one","no one","no one","no one","no one","no one","no one","no one",};
 
-
+    /**
+     * initializacja
+     */
     public void initialize()
     {
         getScores();
     }
+    /**
+     * funkcja testów
+     */
     public void testUpdate()
     {
         UpdateScore("test wysoki", 21);
@@ -116,12 +121,16 @@ public class ScoreMenager {
 
         }
     }
-
+    /**
+     * @return imie na i tej pozycji w postaci stringu
+     */
     public String getName(int i)
     {
         return Names[i];
     }
-
+    /**
+     * @return wynik na i tej pozycji jako int
+     */
     public int getPoint(int i)
     {
         return Points[i];

@@ -170,7 +170,7 @@ public class Renderer {
 //                    chicken.limitReached(false);
             }
             chicken.animate(batch, delta);
-            Egg egg = chicken.throwEgg(world.getLevel());
+            Egg egg = chicken.throwEgg();
             if (egg != null){
                 world.getEggs().add(egg);
             }

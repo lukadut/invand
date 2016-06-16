@@ -25,6 +25,9 @@ public class Egg extends GameObject{
         boundingBox = new Rectangle(x,y,width,height);
         movingVector = new Vector2(0, RandomGenerator.random(1.5f,2));
     }
+    /**
+     * funkcja ulepszajaca jajko, zwieksza predkosc i dodaje ruch po osi x
+     */
     public void EggUpgrade()
     {
         movingVector.x=RandomGenerator.random(-2,2);

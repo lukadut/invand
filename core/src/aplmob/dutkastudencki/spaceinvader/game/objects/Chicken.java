@@ -35,6 +35,14 @@ public class Chicken extends GameObject{
      */
     protected float stateTime;
 
+    /**
+     *poziom na którym został zespawnowany kurczak
+     */
+    protected int level;
+
+    /**
+     * bool informujacy o jakości kurczaka
+     */
     public Boolean isBoss=false;
 
     /**
@@ -48,6 +56,7 @@ public class Chicken extends GameObject{
         texture = setTexture("kurczakWitka.png");
         boundingBox = new Rectangle(x,y,width,height);
         healthPoints += (int)(lvl*0.2);
+        level= lvl;
         makeAnimation(1,8,8);
     }
 
@@ -112,8 +121,8 @@ public class Chicken extends GameObject{
      * Wyrzucenie jajka odbywa się z odstępem minimum 3 sekund, następnie co wywołanie ma 0.1% szans na powodzenie.
      * @return przy powodzeniu wyrzuca nowe jajko w postaci {@link Egg}, w przeciwnym razie zwraca <i>null</i>
      */
-    public Egg throwEgg(int lvl){
-        if (System.currentTimeMillis() - lastEggTime > 3000-10*lvl && RandomGenerator.random(0,1000-10*lvl)<1) {
+    public Egg throwEgg(){
+        if (System.currentTimeMillis() - lastEggTime > 3000-10*level && RandomGenerator.random(0,1000-10*level)<1) {
             lastEggTime = System.currentTimeMillis();
             Egg egg = new Egg(0, getBoundingBox().getY() - getHeight());
             egg.setMiddle(getXMiddle(),getYMiddle());
@@ -122,7 +131,10 @@ public class Chicken extends GameObject{
         }
         return null;
     }
-
+    /**
+     * funkcja analogiczna do rzucajacej jajkiem, 25$ na rzucenie udkiem po śmierci
+     * @return przy powodzeniu wyrzuca nowe udko, w przeciwnym wypadku zwraca <i>null</i>
+     */
     public ChickenLeg throwLeg(){
         if (RandomGenerator.random(0,5)<1) {
 

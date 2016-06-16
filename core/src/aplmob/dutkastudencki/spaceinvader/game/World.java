@@ -36,7 +36,9 @@ public class World {
      * Lista istniejących pocisków.
      */
     private Array<GameObject> bullets;
-
+    /**
+     * Lista istniejących udek
+     */
     private Array<GameObject> legs;
 
 //    private Array<GameObject> powerUps;
@@ -55,11 +57,21 @@ public class World {
      * Flaga do sprawdzania czy gra jest spauzowana.
      */
     private boolean paused = false;
-
+    /**
+     * dzwiek kurczaka
+     */
     public Sound chickenSound;
+    /**
+     * dzwiek laseru
+     */
     public Sound blasterSound;
+    /**
+     * dzwiek konca rozgrywki
+     */
     public Sound noSound;
-
+    /**
+     * poziom gry
+     */
     private int level=0;
 
     /**
@@ -112,7 +124,10 @@ public class World {
     public Array<GameObject> getBullets(){
         return bullets;
     }
-
+    /**
+     *
+     * @return  {@link World#legs} lista udek
+     */
     public Array<GameObject> getLegs(){
         return legs;
     }
@@ -145,8 +160,8 @@ public class World {
      */
     protected void prepareGame(){
 
-        spawnBoss();
-     //   spawnChickens();
+     //   spawnBoss();
+        spawnChickens();
     }
 
     /**
@@ -160,7 +175,9 @@ public class World {
             }
         }
     }
-
+    /**
+     * Tworzenie bossa na planszy
+     */
     public void spawnBoss()
     {
         Boss Boss = new Boss(Config.SCREEN_WIDTH/2,Config.SCREEN_HEIGHT-200,level);

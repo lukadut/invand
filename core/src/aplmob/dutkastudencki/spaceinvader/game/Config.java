@@ -53,10 +53,21 @@ public class Config {
      */
     public static final int EDGE_DISTANCE = 120;
 
-
+    /**
+     * Odstęp w tabelach
+     */
     public static final int PADDING = 30;
+    /**
+     * Odstęp na liscie najlepszych wynikow
+     */
     public static final int SCORE_PADDING = 20;
 
+    /**
+     * odstep od dolnej krawedzi do ruchu bossa
+     */
     public static final int BOSS_BOUNDRY = 250;
+    /**
+     * ilosc wyswietlanych wynikow
+     */
     public static final int HSCORE_QUANTITY = 10;
 }
